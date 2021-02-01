@@ -35,8 +35,10 @@ contract UnstoppableLender is ReentrancyGuard {
         // Ensured by the protocol via the `depositTokens` function
         assert(poolBalance == balanceBefore);
         
+        // Send amount to Borrower
         damnValuableToken.transfer(msg.sender, borrowAmount);
         
+        // Receive amount to Pool
         IReceiver(msg.sender).receiveTokens(address(damnValuableToken), borrowAmount);
         
         uint256 balanceAfter = damnValuableToken.balanceOf(address(this));
